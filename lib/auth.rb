@@ -23,7 +23,9 @@ module Auth
   end
   
   def redirect_to_stored_location_or_default(path)
-    redirect_to(session[:stored_location] || path)
+    location = session[:stored_location] ? session[:stored_location].dup : path
+    session[:stored_location] = nil
+    redirect_to location
   end
   
   def self.included(base)
