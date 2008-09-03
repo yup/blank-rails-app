@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
 
     if logged_in?
       redirect_to_stored_location_or_default root_url
+      reset_session
     else
       flash.now[:error] = "Invalid username/password combination"
       render :action => "new"
@@ -17,7 +18,7 @@ class SessionsController < ApplicationController
   end
   
   def destroy
-    self.current_user = nil
+    reset_session
     redirect_to root_url
   end
 end
