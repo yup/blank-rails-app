@@ -22,7 +22,7 @@ class StoredLocationTest < ActionController::IntegrationTest
     end
     
     def logs_in_and_redirects_to_root
-      post '/sessions/create', :user => {:username => 'august', :password => '12345'}
+      post '/sessions', :user => {:username => 'august', :password => '12345'}
       assert_logged_in
       assert_redirected_to root_path
     end
@@ -33,7 +33,7 @@ class StoredLocationTest < ActionController::IntegrationTest
     end
     
     def logs_in_and_is_redirected_to_profile_edit
-      post '/sessions/create', :user => {:username => 'august', :password => '12345'}
+      post '/sessions', :user => {:username => 'august', :password => '12345'}
       assert_logged_in
       assert_redirected_to profile_path
     end

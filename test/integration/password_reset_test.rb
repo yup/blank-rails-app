@@ -23,7 +23,7 @@ class PasswordResetTest < ActionController::IntegrationTest
     end
     
     def fails_to_log_in
-      post "/sessions/create", :user => {:username => "august", :password => "wrooong"}
+      post "/sessions", :user => {:username => "august", :password => "wrooong"}
       assert_template 'sessions/new'
     end
     
