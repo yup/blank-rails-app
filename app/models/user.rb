@@ -15,7 +15,10 @@ class User < ActiveRecord::Base
   attr_readonly :username
   
   def self.authenticate(username, password)
-    find_by_username_and_password_hash(username, hash_password(password)) || false
+    user = find_by_username(username)
+    #hashed = hash_password(password, user.password_salt)
+    #raise "hashed: #{hashed} --- stored: #{user.password_hash}"
+    user ? (user.password_hash == hash_password(password, user.password_salt) && user) : false
   end
   
   def self.find_for_password_reset(query)
@@ -31,19 +34,25 @@ class User < ActiveRecord::Base
   
   private
   
-  def self.hash_password(password)
-    Digest::SHA1.hexdigest(Settings["password_salt"] % password)
+  def self.hash_password(password, salt)
+    Digest::SHA1.hexdigest(Settings["salt_format"] % [password, salt])
+  end
+  
+  def self.generate_random_hash
+    Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by {rand}.join)
   end
   
   def self.generate_password
-    Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by {rand}.join)[1..(5..7).to_a.rand]
+    generate_random_hash[1..(5..7).to_a.rand]
   end
   
   def hash_password
     if password_required?
-      self.password_hash = self.class.hash_password(self.password)
+      self.password_salt = self.class.generate_random_hash
+      self.password_hash = self.class.hash_password(password, password_salt)
     end
   end
+  
   
   def password_required?
     new_record? || !self.password.blank?
