@@ -2,6 +2,8 @@ require "fileutils"
 require "yaml"
 require "digest/sha1"
 
+FIXTURE_PASSWORD = '12345'
+
 namespace :app do
   desc 'Creates a database.yml and settings.yml.'
   # Because the salt format is and should be different from every app, this rake tasks
@@ -11,10 +13,9 @@ namespace :app do
     FileUtils.cp(File.join(Rails.root, 'config', 'database.sample.yml'), File.join(Rails.root, 'config', 'database.yml'))
     
     puts ">> Creating settings.yml.."
-    
     create_settings_dot_yml
     
-    puts '>> Creating users fixture with "12345" as password..'
+    puts ">> Creating users fixture with '#{FIXTURE_PASSWORD}' as password.."
     create_user_fixture
     
     puts ">> Migrating the database.."
@@ -35,7 +36,7 @@ namespace :app do
   
   def create_user_fixture
     salt = generate_salt
-    password_hash = Digest::SHA1.hexdigest(@salt_format % ['12345', salt])
+    password_hash = Digest::SHA1.hexdigest(@salt_format % [FIXTURE_PASSWORD, salt])
     
     data = {
       'august' => {
