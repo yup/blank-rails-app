@@ -16,8 +16,6 @@ class User < ActiveRecord::Base
   
   def self.authenticate(username, password)
     user = find_by_username(username)
-    #hashed = hash_password(password, user.password_salt)
-    #raise "hashed: #{hashed} --- stored: #{user.password_hash}"
     user ? (user.password_hash == hash_password(password, user.password_salt) && user) : false
   end
   
