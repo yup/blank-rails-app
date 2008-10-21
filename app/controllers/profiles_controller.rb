@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
       flash[:success] = "Your password has ben reset! A new password has been sent to your e-mail address."
       redirect_to login_path
     else
-      flash[:error] = "Could not find a user by that username, full name or email."
+      flash[:error] = "Could not find a user by that username or email."
       render :action => "forgot_password"
     end
   end

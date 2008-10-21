@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   
   def self.authenticate(username, password)
     user = find_by_username(username)
-    user ? (user.password_hash == hash_password(password, user.password_salt) && user) : false
+    user && user.password_hash == hash_password(password, user.password_salt) && user
   end
   
   def self.find_for_password_reset(query)

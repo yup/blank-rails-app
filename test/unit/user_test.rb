@@ -32,7 +32,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_failed_authentication
-    assert_equal false, User.authenticate("burger", "furger")
+    assert !User.authenticate("burger", "furger")
   end
   
   def test_generate_password_length
