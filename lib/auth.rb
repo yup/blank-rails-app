@@ -1,15 +1,16 @@
 module Auth
   def current_user
-    @current_user ||= current_user_or_false
+    @current_user ||= session[:user] && User.find(session[:user])
   end
-  
-  def current_user=(user_or_false)
-    @current_user = user_or_false
-    session[:user] = user_or_false[:id] rescue nil
+
+  # Pass either an instance of User or nil/false here.
+  def current_user=(user)
+    @current_user = user
+    session[:user] = user.is_a?(User) ? user.id : nil
   end
   
   def logged_in?
-    current_user != false
+    current_user.is_a?(User)
   end
   
   def login_required
@@ -33,11 +34,7 @@ module Auth
   end
   
   private
-  
-  def current_user_or_false
-    User.find_by_id(session[:user]) || false
-  end
-  
+
   def store_location
     session[:stored_location] = request.parameters
   end
