@@ -2,12 +2,10 @@
 <html>
     <head>
         <title></title>
-        <%= stylesheet_link_tag "style" %>
-        <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' %>
-        <%= javascript_include_tag "application" %>
+        <%= stylesheet_link_tag "screen" %>
     </head>
     <body>
-	    <%= content_tag(:div, Settings["system_message"], :id => "system_message") unless Settings["system_message"].blank? %>
+      <%= content_tag(:div, SETTINGS["system_message"], :id => "system_message") unless SETTINGs["system_message"].blank? %>
         <div id="wrapper">
             <div id="main">
                 <%= flashes %>

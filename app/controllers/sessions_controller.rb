@@ -1,23 +1,26 @@
 class SessionsController < ApplicationController
-  before_filter :login_required, :only => [:destroy]
-  
+  before_filter :require_login, :except => [:new, :create]
+
   def new
-    logged_in? ? redirect_to(root_url) : render
+    render
   end
-  
+
   def create
-    self.current_user = User.authenticate(params[:user][:username], params[:user][:password])
+    self.current_user = User.authenticate(params[:user][:email], params[:user][:password])
 
     if logged_in?
-      redirect_to_stored_location_or_default root_url
+      # ...
     else
-      flash.now[:error] = "Invalid username/password combination"
-      render :action => "new"
+      flash.now[:error]
+      # Persisting the email in the form
+      @user = User.new(:email => params[:user][:username])
+      # ...
     end
   end
-  
+
   def destroy
+    self.current_user = nil
     reset_session
-    redirect_to root_url
+    redirect_to root_path
   end
 end

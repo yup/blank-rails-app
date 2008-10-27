@@ -1,0 +1,21 @@
+Blank Rails App
+===============
+
+Blank slate boilerplate Rails application. An alternative to the rails command.
+
+Installing
+==========
+
+* git clone git://github.com/leethal/blank-rails-app.git
+* mv blank-rails-app your-awesome-project
+* cd your-awesome-project
+* rake app:init
+* rake test
+* Make the tests pass
+
+A note on making the tests pass. Some tests are flunked (read: failing) deliberately. It means that those parts has to be implemented on a per-app basis. This includes "what should happen after successful login" and other things. The tests themself should be pretty descriptive.
+
+Notes
+=====
+
+* config/settings.yml contains app global settings. Any key added here will be available through SETTINGS, e.g. SETTINGS[:foo]. Very convenient for API keys, deployment specific settings etc.

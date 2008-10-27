@@ -1,16 +1,25 @@
+# Be sure to restart your server when you modify this file
 RAILS_GEM_VERSION = '2.1.1' unless defined? RAILS_GEM_VERSION
 
 require File.join(File.dirname(__FILE__), 'boot')
 
+SETTINGS = YAML.load_file(File.join(Rails.root, 'config', 'settings.yml'))
+
 Rails::Initializer.run do |config|
-  # Specify gems that this application depends on. 
-  # They can then be installed with "rake gems:install" on new installations.
+  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
   # config.gem "bj"
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
+  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
+  # config.load_paths += %W( #{RAILS_ROOT}/extras )
+  # config.log_level = :debug
+  # config.action_controller.session_store = :active_record_store
+  # config.active_record.schema_format = :sql
+  # config.active_record.observers = :cacher, :garbage_collector
 
-  # Make Time.zone default to the specified zone, and make Active Record store time values
-  # in the database in UTC, and return them converted to the specified local zone.
-  # Run "rake -D time" for a list of tasks for finding time zone names. Uncomment to use default local time.
   config.time_zone = 'UTC'
+  config.action_controller.session = {
+    :session_key => SETTINGS['cookie_key'],
+    :secret      => SETTINGS['cookie_secret']
+  }
 end

@@ -1,32 +1,25 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
-  
-  def test_get_new
-    get :new
+  def test_successful_login
+    flunk "Test redirection after successful login."
+    post :create, :user => {:email => 'augustlilleaas@gmail.com', :password => '12345'}
+    assert logged_in?
+    assert_equal users(:leethal).id, @request.session[:user]
+  end
+
+  def test_failed_login
+    flunk "Test failed login"
+    post :create, :user => {:email => 'silly'}
+    assert !logged_in?
     assert_response :success
   end
-  
-  def test_redirects_to_root_when_logged_in
-    get_with_session :new
-    assert_redirected_to root_url
-  end
-  
-  def test_invalid_login_credentials
-    post :create, :user => {:username => "august", :password => "definately invalid"}
-    assert_response :success
-    assert_template "sessions/new"
-  end
-  
-  def test_valid_login_credentials
-    post :create, :user => {:username => "august", :password => "12345"}
-    assert_redirected_to root_url
-    assert_equal users(:august), @controller.current_user
-  end
-  
-  def test_log_out
-    post_with_session :destroy
-    assert_nil session[:user]
-    assert_redirected_to root_url
+
+  def test_logout
+    login_as :leethal
+    post :destroy
+
+    assert_redirected_to root_path
+    assert !logged_in?
   end
 end
