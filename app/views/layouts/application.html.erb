@@ -5,7 +5,7 @@
         <%= stylesheet_link_tag "screen" %>
     </head>
     <body>
-      <%= content_tag(:div, SETTINGS["system_message"], :id => "system_message") unless SETTINGs["system_message"].blank? %>
+      <%= content_tag(:div, SETTINGS["system_message"], :id => "system_message") unless SETTINGS["system_message"].blank? %>
         <div id="wrapper">
             <div id="main">
                 <%= flashes %>
