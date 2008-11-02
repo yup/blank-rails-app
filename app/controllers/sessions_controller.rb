@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     else
       flash.now[:error]
       # Persisting the email in the form
-      @user = User.new(:email => params[:user][:username])
+      @user = User.new(:email => params[:user][:email])
       # ...
     end
   end
