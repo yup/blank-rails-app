@@ -2,7 +2,7 @@
 # authentication methods.
 module Authentication
   def self.included(base)
-    base.helper_method :logged_in?, :current_user, :current_group
+    base.helper_method :logged_in?, :current_user
   end
 
   def current_user
