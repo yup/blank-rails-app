@@ -18,4 +18,4 @@ A note on making the tests pass. Some tests are flunked (read: failing) delibera
 Notes
 =====
 
-* config/settings.yml contains app global settings. Any key added here will be available through SETTINGS, e.g. SETTINGS[:foo]. Very convenient for API keys, deployment specific settings etc.
+* config/settings.yml contains app global settings. Any key added here will be available through SETTINGS, e.g. SETTINGS['foo']. Very convenient for API keys, deployment specific settings etc.
