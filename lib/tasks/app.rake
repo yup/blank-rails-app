@@ -54,7 +54,7 @@ namespace :app do
   end
 
   def generate_secret
-    Rake::Task['secret'].invoke.split("\n")[1]
+    %x{rake secret}.split("\n")[1].inspect
   end
 
   def generate_salt_format
