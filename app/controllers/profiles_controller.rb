@@ -5,6 +5,7 @@ class ProfilesController < ApplicationController
     @user = User.new(params[:user])
 
     if @user.save
+      self.current_user = @user
       # ...
     else
       # render :action => 'foo'
