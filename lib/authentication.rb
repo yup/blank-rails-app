@@ -4,6 +4,8 @@ module Authentication
   def self.included(base)
     base.helper_method :logged_in?, :current_user
   end
+  
+  private
 
   def current_user
     @current_user ||= session[:user] && User.find(session[:user])
