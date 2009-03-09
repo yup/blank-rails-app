@@ -81,7 +81,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_valid_emails
-    %(foo@bar.com bubububub@bubububub.bubububub).each do |email|
+    %w(foo@bar.com bubububub@bubububub.bubububub).each do |email|
       assert new_user(:email => email).valid?
     end
   end
