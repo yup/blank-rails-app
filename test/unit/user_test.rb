@@ -7,9 +7,6 @@ class UserTest < ActiveSupport::TestCase
 
   def test_password_confirmation_required_on_create
     u = new_user
-    u.password_confirmation = nil
-    assert !u.valid?
-
     u.password_confirmation = ""
     assert !u.valid?
 

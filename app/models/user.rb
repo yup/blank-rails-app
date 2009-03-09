@@ -3,16 +3,11 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /^(.+)@(.+)\.(.+)$/
   validates_uniqueness_of :email
   validates_length_of :password, :minimum => 4, :if => :password_required?
+  validates_confirmation_of :password
 
   # The virtual attributes that temporary stores the plain text passwords
   attr_accessor :password
   attr_accessor :password_confirmation
-
-  # validates_confirmation_of allows nil. It also adds the error on the attribute it confirms,
-  # not the virtual 'password_confirmation' attribute.
-  validates_each(:password_confirmation, :if => :password_required?) do |record, attribute, value|
-    record.errors.add(attribute) unless value == record.password
-  end
 
   before_save :hash_password
 
