@@ -9,6 +9,8 @@ Installing
 * git clone git://github.com/leethal/blank-rails-app.git
 * mv blank-rails-app your-awesome-project
 * cd your-awesome-project
+* git submodule init
+* git submodule add
 * rake app:init
 * rake test
 * Make the tests pass
